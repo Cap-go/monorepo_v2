@@ -31,4 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          node scripts/run-release-it.js ${{ matrix.package }} --ci
+          node scripts/run-release-it.mjs ${{ matrix.package }} --ci
