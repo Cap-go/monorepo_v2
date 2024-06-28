@@ -5,7 +5,8 @@
   "devDependencies": {
     "@types/bun": "latest",
     "openai": "^4.52.1",
-    "release-it": "^17.4.0"
+    "release-it": "^17.4.0",
+    "ts-node": "^10.9.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
