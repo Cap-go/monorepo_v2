@@ -16,7 +16,7 @@ const rootDir = join(__dirname, '..');
 const packagePath = join(rootDir, 'packages', packageName);
 const configPath = join(rootDir, '.release-it.json');
 
-let command = `bun run release-it --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
+let command = `node -r ts-node/register node_modules/.bin/release-it --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
 
 if (existsSync(configPath)) {
   command += ` --config=${configPath}`;
