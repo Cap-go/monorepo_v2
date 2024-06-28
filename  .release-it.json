@@ -1,0 +1,26 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    },
+    "./scripts/release-it-plugins/custom-changelog-plugin.ts": {},
+    "./scripts/release-it-plugins/android-version-plugin.ts": {},
+    "./scripts/release-it-plugins/ios-version-plugin.ts": {}
+  },
+  "hooks": {
+    "after:release": "node -e \"require('./scripts/release-it-plugins/custom-changelog-plugin.ts').writeLog()\"",
+    "before:bump": ["bun run lint", "bun run build"]
+  },
+  "npm": {
+    "publish": true
+  },
+  "git": {
+    "commitMessage": "chore(release): release ${npm.name}@${version}",
+    "tagName": "${name}@${version}",
+    "tagAnnotation": "Release ${name}@${version}"
+  },
+  "github": {
+    "release": true
+  }
+}

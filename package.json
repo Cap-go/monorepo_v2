@@ -12,27 +12,5 @@
   "scripts": {
     "tsc": "tsc",
     "release": "node scripts/run-release-it.mjs"
-  },
-  "release-it": {
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular",
-        "infile": "CHANGELOG.md"
-      },
-      "./scripts/release-it-plugins/custom-changelog-plugin.ts": {},
-      "./scripts/release-it-plugins/android-version-plugin.ts": {},
-      "./scripts/release-it-plugins/ios-version-plugin.ts": {}
-    },
-    "hooks": {
-      "after:release": "node -e \"require('./scripts/release-it-plugins/custom-changelog-plugin.ts').writeLog()\"",
-      "before:bump": ["bun run lint", "bun run build"]
-    },
-    "git": {
-      "commitMessage": "chore(release): release ${npm.name}@${version}",
-      "tagName": "${npm.name}@${version}"
-    },
-    "npm": {
-      "publish": true
-    }
   }
 }
