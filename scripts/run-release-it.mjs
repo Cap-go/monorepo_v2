@@ -11,8 +11,9 @@ if (!packageName) {
   process.exit(1);
 }
 
-const packagePath = path.join(__dirname, '..', 'packages', packageName);
-const command = `cd ${packagePath} && bun run release-it ${process.argv.slice(3).join(' ')}`;
+const rootDir = path.join(__dirname, '..');
+const packagePath = path.join(rootDir, 'packages', packageName);
+const command = `cd ${rootDir} && bun run release-it --config=${rootDir}/.release-it.json --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
 
 try {
   execSync(command, { stdio: 'inherit' });
