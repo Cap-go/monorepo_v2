@@ -10,8 +10,8 @@
   },
   "workspaces": ["packages/*"],
   "scripts": {
-    "release": "release-it",
-    "test-release": "release-it --dry-run --ci"
+    "tsc": "tsc",
+    "release": "node scripts/run-release-it.mjs"
   },
   "release-it": {
     "plugins": {
