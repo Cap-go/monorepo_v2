@@ -13,10 +13,12 @@ if (!packageName) {
 
 const rootDir = path.join(__dirname, '..');
 const packagePath = path.join(rootDir, 'packages', packageName);
-const command = `cd ${rootDir} && bun run release-it --config=${rootDir}/.release-it.json --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
+const releaseItPath = path.join(rootDir, 'node_modules', '.bin', 'release-it');
+
+const command = `node ${releaseItPath} --config=${rootDir}/.release-it.json --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
 
 try {
-  execSync(command, { stdio: 'inherit' });
+  execSync(command, { stdio: 'inherit', cwd: rootDir });
 } catch (error) {
   console.error(`Error executing command: ${command}`);
   console.error(error);
