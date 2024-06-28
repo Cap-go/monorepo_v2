@@ -1,9 +1,10 @@
-import { execSync } from 'child_process';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { execSync } from 'node:child_process';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { existsSync } from 'node:fs';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 const packageName = process.argv[2];
 if (!packageName) {
@@ -11,10 +12,15 @@ if (!packageName) {
   process.exit(1);
 }
 
-const rootDir = path.join(__dirname, '..');
-const packagePath = path.join(rootDir, 'packages', packageName);
+const rootDir = join(__dirname, '..');
+const packagePath = join(rootDir, 'packages', packageName);
+const configPath = join(rootDir, '.release-it.json');
 
-const command = `npx release-it --config=${rootDir}/.release-it.json --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
+let command = `bun run release-it --pkg=${packagePath}/package.json ${process.argv.slice(3).join(' ')}`;
+
+if (existsSync(configPath)) {
+  command += ` --config=${configPath}`;
+}
 
 try {
   execSync(command, { stdio: 'inherit', cwd: rootDir });

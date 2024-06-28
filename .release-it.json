@@ -9,6 +9,7 @@
     "./scripts/release-it-plugins/ios-version-plugin.ts": {}
   },
   "hooks": {
+    "after:bump": "bun run scripts/gpt-changelog-plugin.ts",
     "after:release": "node -e \"require('./scripts/release-it-plugins/custom-changelog-plugin.ts').writeLog()\"",
     "before:bump": ["bun run lint", "bun run build"]
   },
