@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - '@capgo/test_webapp@*'  # This will trigger the workflow only for tags starting with 'app@'
+
+jobs:
+  deploy-to-cloudflare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Extract version from tag
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/app@}
+      - name: Install dependencies
+        run: |
+          cd packages/webapp
+          bun install
+      - name: Build
+        run: |
+          cd packages/webapp
+          bun run build
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: 'packages/webapp'
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
